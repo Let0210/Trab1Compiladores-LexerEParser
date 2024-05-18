@@ -26,7 +26,8 @@ endif
 end.
 
 ----------------------------
-//com ifs aninhados
+{com ifs aninhados e parêntesis optativos nas expressões boleanas dentro do if}
+
 begin
 
 var a : int ;
