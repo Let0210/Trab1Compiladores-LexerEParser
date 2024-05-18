@@ -8,8 +8,8 @@ if (Valor1>a) then
 
 else
    var t: int;
-   Valor1 := (2*4)/3+2;    
-   
+   Valor1 := (2*4)/3+2;
+
 endif
 
 end.
