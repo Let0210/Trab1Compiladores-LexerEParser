@@ -26,3 +26,25 @@ endif
 end.
 
 ----------------------------
+//com ifs aninhados
+begin
+
+var a : int ;
+var Valor1, Valor2 : float ;
+
+if (Valor1>a) then
+   var z: float;
+
+else
+   var t: int;
+   Valor1 := (2*4)/3+2;
+
+   if (a==t) then
+        var x : int;
+   else
+        y:= 3*2; {não trata variáveis não declaradas por enquanto}
+   endif
+
+endif
+
+end.

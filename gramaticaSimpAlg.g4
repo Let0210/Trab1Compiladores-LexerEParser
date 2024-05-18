@@ -24,7 +24,7 @@ WS     : [ \t\r\n]+ -> skip ;
 //regras sintáticas
 prog: START_PROG code END_PROG;
 code: (command)+;
-command: (decl_var | decl_if | decl_atrib | print | exp_arit |COMMENT);
+command: (decl_var | decl_if | decl_atrib | print | exp_arit); //aparentemente não precisa colocar | COMMENT
 decl_var: (TYPE_VAR VAR_NAME (',' VAR_NAME)* ':' (TYPE_INT | TYPE_FLOAT)) END_CMD;
 decl_if: (IF '(' exp_bool ')' THEN (command)+ | IF '(' exp_bool ')' THEN (command)+ ELSE (command)+) ENDIF;
 exp_bool: (exp_rela | exp_log) (AND | OR exp_bool)*;
