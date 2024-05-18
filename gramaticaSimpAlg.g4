@@ -29,7 +29,9 @@ decl_var: (TYPE_VAR VAR_NAME (',' VAR_NAME)* ':' (TYPE_INT | TYPE_FLOAT)) END_CM
 decl_if: (IF '(' exp_bool ')' THEN (command)+ | IF '(' exp_bool ')' THEN (command)+ ELSE (command)+) ENDIF;
 exp_bool: (exp_rela | exp_log) (AND | OR exp_bool)*;
 exp_rela: VAR_NAME ('>' |'>=' | '<' | '<=' | '==' | '!=') VAR_NAME; //(VAR_NAME | exp_arit) ('>' |'>=' | '<' | '<=' | '==' | '!=') (VAR_NAME | exp_arit); ->se aceitasse expressões aritméticas tbm
-exp_arit:'só para não ficar vazio e dar erro por enquanto';
+exp_arit: term (('+' | '-') term )*;
+term: factor ( ('*' | '/') factor )*;
+factor: NUM | VAR_NAME | '(' exp_arit ')';
+decl_atrib: VAR_NAME ':=' exp_arit END_CMD;
 exp_log:'só para não ficar vazio e dar erro por enquanto';
-decl_atrib: 'só para não ficar vazio e dar erro por enquanto';
 print:'só para não ficar vazio e dar erro por enquanto';
