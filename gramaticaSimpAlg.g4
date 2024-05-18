@@ -14,6 +14,8 @@ AND: 'and';
 OR: 'or';
 END_CMD: ';';
 NUM: [0-9]+ ;
+INPUT: 'input';
+PRINT: 'print';
 VAR_NAME: [a-zA-Z] [a-zA-Z0-9]*; //-> sem caseSensitive fica assim: ([a-z] | [A-Z]) ([a-z] | [A-Z] | NUM)*
 
 
@@ -24,16 +26,18 @@ WS     : [ \t\r\n]+ -> skip ;
 //regras sintáticas (a gramática em si)
 prog: START_PROG code END_PROG;
 code: (command)+;
-command: (decl_var | decl_if | decl_atrib | print | exp_arit); //não precisa colocar | COMMENT
+command: (decl_var | decl_if | decl_atrib | exp_arit | input_fun | print_fun ); //não precisa colocar | COMMENT
 decl_var: (TYPE_VAR VAR_NAME (',' VAR_NAME)* ':' (TYPE_INT | TYPE_FLOAT)) END_CMD;
 decl_if: (IF '(' exp_bool ')' THEN (command)+ | IF '(' exp_bool ')' THEN (command)+ ELSE (command)+) ENDIF;
-//exp_bool: ((exp_rela | exp_log) ((AND | OR) exp_bool)*) ;
 exp_bool: exp_term ( (AND | OR) exp_term )*;
-exp_term: '(' exp_bool ')' | exp_rela | exp_log;
+exp_term: '(' exp_bool ')' | exp_rela | exp_log; //permite parêntesis optativos
 exp_rela: VAR_NAME ('>' |'>=' | '<' | '<=' | '==' | '!=') VAR_NAME; //(VAR_NAME | exp_arit) ('>' |'>=' | '<' | '<=' | '==' | '!=') (VAR_NAME | exp_arit); ->se aceitasse expressões aritméticas tbm
 exp_log: '!' VAR_NAME;
 exp_arit: term (('+' | '-') term )*;
 term: factor ( ('*' | '/' | '%') factor )*;
 factor: NUM | VAR_NAME | '(' exp_arit ')';
 decl_atrib: VAR_NAME ':=' exp_arit END_CMD;
-print:'só para não ficar vazio e dar erro por enquanto';
+input_fun:  INPUT '(' VAR_NAME (',' VAR_NAME)* ')' END_CMD;
+print_fun: PRINT '(' '"' .*? ('=' | '+' | '-' | '*' | '/' | '%')* '"' ',' VAR_NAME (',' VAR_NAME)* ')';
+
+

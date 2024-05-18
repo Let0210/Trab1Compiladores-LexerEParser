@@ -49,3 +49,13 @@ else
 endif
 
 end.
+
+-----------------------------
+begin
+var x, y : float;
+input (x,y);
+var z : float;
+var z : float;
+z := (x+y)/2;
+print ("media =", z) { observe ausência do ; }
+end.
