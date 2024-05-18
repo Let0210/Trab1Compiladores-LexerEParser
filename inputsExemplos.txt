@@ -1,0 +1,17 @@
+begin
+
+var a : int ;
+var Valor1, Valor2 : float ;
+
+if (Valor1>a) then
+   var z: float;
+
+else
+   var t: int;
+   Valor1 := (2*4)/3+2;    
+   
+endif
+
+end.
+
+----------------------------
