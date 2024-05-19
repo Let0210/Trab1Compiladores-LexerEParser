@@ -26,7 +26,6 @@ WS     : [ \t\r\n]+ -> skip ;
 
 //regras sintáticas (a gramática em si)
 prog: START_PROG command* last_command END_PROG;
-//code: (command)+;
 command: (decl | fun )';'; //não precisa colocar | COMMENT
 last_command: decl | fun ; //comando sem ponto e vírgula
 decl: decl_var | decl_atrib | decl_if | decl_repeat;
