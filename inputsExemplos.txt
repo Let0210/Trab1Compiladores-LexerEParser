@@ -8,7 +8,6 @@ if (Valor1>a) then
 endif
 
 end.
-
 ---------------------
 begin
 
@@ -55,3 +54,5 @@ var z : float;
 z := (x+y)/2;
 print ("media =", z) { observe ausência do ; }
 end.
+---------------------------
+
