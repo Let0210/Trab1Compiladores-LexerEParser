@@ -12,11 +12,13 @@ ELSE: 'else';
 ENDIF: 'endif';
 AND: 'and';
 OR: 'or';
-END_CMD: ';';
+REPEAT: 'repeat';
+UNTIL: 'until';
 NUM: [0-9]+ ;
 INPUT: 'input';
 PRINT: 'print';
 VAR_NAME: [a-zA-Z] [a-zA-Z0-9]*; //-> sem caseSensitive fica assim: ([a-z] | [A-Z]) ([a-z] | [A-Z] | NUM)*
+STRING: '"' ~["\r\n\\]+ '"';
 
 
 //comentários e espaços em branco
@@ -24,20 +26,25 @@ COMMENT: '{' .*? '}' -> skip;
 WS     : [ \t\r\n]+ -> skip ;
 
 //regras sintáticas (a gramática em si)
-prog: START_PROG code END_PROG;
-code: (command)+;
-command: (decl_var | decl_if | decl_atrib | exp_arit | input_fun | print_fun ); //não precisa colocar | COMMENT
-decl_var: (TYPE_VAR VAR_NAME (',' VAR_NAME)* ':' (TYPE_INT | TYPE_FLOAT)) END_CMD;
-decl_if: (IF '(' exp_bool ')' THEN (command)+ | IF '(' exp_bool ')' THEN (command)+ ELSE (command)+) ENDIF;
+prog: START_PROG command* last_command END_PROG;
+//code: (command)+;
+command: (decl | fun )';'; //não precisa colocar | COMMENT
+last_command: decl | fun ; //comando sem ponto e vírgula
+decl: decl_var | decl_atrib | decl_if | decl_repeat;
+fun: input_fun | print_fun;
+decl_var: (TYPE_VAR VAR_NAME (',' VAR_NAME)* ':' (TYPE_INT | TYPE_FLOAT));
+decl_if: ( (IF '(' exp_bool ')' THEN (command* last_command) ) | (IF '(' exp_bool ')' THEN command* last_command  ELSE command* last_command)) ENDIF;
 exp_bool: exp_term ( (AND | OR) exp_term )*;
 exp_term: '(' exp_bool ')' | exp_rela | exp_log; //permite parêntesis optativos
-exp_rela: VAR_NAME ('>' |'>=' | '<' | '<=' | '==' | '!=') VAR_NAME; //(VAR_NAME | exp_arit) ('>' |'>=' | '<' | '<=' | '==' | '!=') (VAR_NAME | exp_arit); ->se aceitasse expressões aritméticas tbm
+exp_rela: (VAR_NAME | NUM) ('>' |'>=' | '<' | '<=' | '==' | '!=') (VAR_NAME | NUM); //(VAR_NAME | exp_arit) ('>' |'>=' | '<' | '<=' | '==' | '!=') (VAR_NAME | exp_arit); ->se aceitasse expressões aritméticas tbm
 exp_log: '!' VAR_NAME;
 exp_arit: term (('+' | '-') term )*;
 term: factor ( ('*' | '/' | '%') factor )*;
 factor: NUM | VAR_NAME | '(' exp_arit ')';
-decl_atrib: VAR_NAME ':=' exp_arit END_CMD;
-input_fun:  INPUT '(' VAR_NAME (',' VAR_NAME)* ')' END_CMD;
-print_fun: PRINT '(' '"' .*? ('=' | '+' | '-' | '*' | '/' | '%')* '"' ',' VAR_NAME (',' VAR_NAME)* ')';
+decl_atrib: VAR_NAME ':=' exp_arit;
+input_fun:  INPUT '(' VAR_NAME (',' VAR_NAME)* ')';
+//print_fun: PRINT '(' '"' .*? ('=' | '+' | '-' | '*' | '/' | '%')* '"' ',' VAR_NAME (',' VAR_NAME)* ')';
+print_fun: PRINT '(' (STRING ',')* VAR_NAME (',' VAR_NAME)* ')'; //pode ter string ou não
+decl_repeat: REPEAT command* last_command UNTIL '('exp_bool')';
 
 

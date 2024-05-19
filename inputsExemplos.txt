@@ -4,7 +4,8 @@ var a : int ;
 var Valor1, Valor2 : float ;
 
 if (Valor1>a) then
-   var z: float;
+   var z: float
+endif
 
 end.
 
@@ -15,11 +16,11 @@ var a : int ;
 var Valor1, Valor2 : float ;
 
 if (Valor1>a) then
-   var z: float;
+   var z: float
 
 else
    var t: int;
-   Valor1 := (2*4)/3+2;
+   Valor1 := (2*4)/3+2
 
 endif
 
@@ -34,22 +35,17 @@ var a : int ;
 var Valor1, Valor2 : float ;
 
 if (Valor1>a) then
-   var z: float;
+   var z: float
 
 else
    var t: int;
    Valor1 := (2*4)/3+2;
 
    if (a==t) then
-        var x : int;
+        var x : int
    else
-        y:= 3*2; {não trata variáveis não declaradas por enquanto}
+        y:= 3*2 {não trata variáveis não declaradas por enquanto}
    endif
-
-endif
-
-end.
-
 -----------------------------
 begin
 var x, y : float;
