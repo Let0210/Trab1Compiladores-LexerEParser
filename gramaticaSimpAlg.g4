@@ -1,3 +1,6 @@
+//1º trabalho de Compiladores - Analisador Léxico e Sintático da gramática SimpAlg
+//Alunos: ANA LETICIA RODRIGUES DE OLIVEIRA E  ANTONIO GERALDO REGO JUNIOR
+
 grammar gramaticaSimpAlg;
 
 //regras léxicas (tokens)
