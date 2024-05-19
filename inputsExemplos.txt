@@ -1,3 +1,5 @@
+//Exemplos de inputs válidos
+
 begin
 
 var a : int ;
@@ -45,6 +47,10 @@ else
    else
         y:= 3*2 {não trata variáveis não declaradas por enquanto}
    endif
+
+endif
+
+end.
 -----------------------------
 begin
 var x, y : float;
@@ -56,3 +62,17 @@ print ("media =", z) { observe ausência do ; }
 end.
 ---------------------------
 
+begin
+var i, n : float;
+input(n);
+i := 0;
+n:= 2+6 / 8;
+repeat
+    if (i == 0 and n>0) then
+        print("i igual a zero e n maior que zero")
+    else
+        print(i,n)
+    endif;
+    i := i + 1
+until (i > n)
+end.
