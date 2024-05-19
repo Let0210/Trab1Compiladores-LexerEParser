@@ -3,9 +3,7 @@ grammar gramaticaSimpAlg;
 //regras léxicas (tokens)
 START_PROG: 'begin';
 END_PROG: 'end.';
-TYPE_INT: 'int';
-TYPE_FLOAT: 'float';
-TYPE_VAR: 'var';
+TYPE_VAR: 'int' | 'float';
 THEN: 'then';
 IF: 'if';
 ELSE: 'else';
@@ -33,7 +31,7 @@ command: (decl | fun )';'; //não precisa colocar | COMMENT
 last_command: decl | fun ; //comando sem ponto e vírgula
 decl: decl_var | decl_atrib | decl_if | decl_repeat;
 fun: input_fun | print_fun;
-decl_var: (TYPE_VAR VAR_NAME (',' VAR_NAME)* ':' (TYPE_INT | TYPE_FLOAT));
+decl_var: ('var' VAR_NAME (',' VAR_NAME)* ':' TYPE_VAR);
 decl_if: ( (IF '(' exp_bool ')' THEN (command* last_command) ) | (IF '(' exp_bool ')' THEN command* last_command  ELSE command* last_command)) ENDIF;
 exp_bool: (exp_term ( (AND | OR) exp_term )*) | BOOL;
 exp_term: '(' exp_bool ')' | exp_rela | exp_log; //permite parêntesis optativos
@@ -44,7 +42,6 @@ term: factor ( ('*' | '/' | '%') factor )*;
 factor: NUM | VAR_NAME | '(' exp_arit ')';
 decl_atrib: VAR_NAME ':=' exp_arit;
 input_fun:  INPUT '(' VAR_NAME (',' VAR_NAME)* ')';
-//print_fun: PRINT '(' '"' .*? ('=' | '+' | '-' | '*' | '/' | '%')* '"' ',' VAR_NAME (',' VAR_NAME)* ')';
 print_fun: PRINT '(' ( (STRING ',')* (VAR_NAME (',' VAR_NAME)*)* | STRING ) ')'; //o ou garante ter só uma string qualquer
 decl_repeat: REPEAT command* last_command UNTIL '('exp_bool')';
 
